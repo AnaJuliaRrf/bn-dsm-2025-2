@@ -20,3 +20,19 @@ model Categoria {
   id          String    @id @default(auto()) @map("_id") @db.ObjectId
   descricao   String
 }
+
+model Cliente {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  nome            String
+  cpf             String   @unique
+  data_nascimento DateTime? // <-- AGORA É OPCIONAL (?)
+  email           String   @unique
+  logradouro      String   
+  num_imovel      String
+  complemento     String?  // Opcional
+  bairro          String
+  municipio       String
+  uf              String
+  cep             String
+  celular         String   // <-- AGORA É OBRIGATÓRIO (sem ?)
+}
