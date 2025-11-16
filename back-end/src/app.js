@@ -33,4 +33,7 @@ app.use('/pedidos', pedidosRouter)
 import produtosRouter from './routes/produtos.js'
 app.use('/produtos', produtosRouter)
 
+import itensRouter from './routes/itens.js' 
+app.use('/itens', itensRouter)
+
 export default app

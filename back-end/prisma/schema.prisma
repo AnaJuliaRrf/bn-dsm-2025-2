@@ -6,7 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  //output   = "../src/generated/prisma"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -20,24 +20,23 @@ model Categoria {
   id          String    @id @default(auto()) @map("_id") @db.ObjectId
   descricao   String
   produtos    Produto[]
-
 }
 
 model Cliente {
-  id              String   @id @default(auto()) @map("_id") @db.ObjectId
-  nome            String
-  cpf             String   @unique
-  data_nascimento DateTime? // <-- AGORA É OPCIONAL (?)
-  email           String   @unique
-  logradouro      String   
-  num_imovel      String
-  complemento     String?  // Opcional
-  bairro          String
-  municipio       String
-  uf              String
-  cep             String
-  celular         String   // <-- AGORA É OBRIGATÓRIO (sem ?)
-  pedidos         Pedido[] // Um cliente pode ter uma lista (array) de Pedidos
+  id                String    @id @default(auto()) @map("_id") @db.ObjectId
+  nome              String
+  cpf               String    @unique     // Não pode se repetir na coleção
+  data_nascimento   DateTime? // opcional
+  email             String    @unique
+  logradouro        String    
+  num_imovel        String
+  complemento       String?   // opcional
+  bairro            String
+  municipio         String
+  uf                String
+  cep               String
+  celular           String
+  pedidos           Pedido[]
 }
 
 model Fornecedor {
@@ -63,7 +62,7 @@ model Pedido {
   num_pedido        Int           @unique
   data_hora         DateTime      @default(now())
   cliente_id        String        @db.ObjectId
-  cliente Cliente @relation(fields: [cliente_id], references: [id])
+  cliente           Cliente       @relation(fields: [cliente_id], references: [id])
   itens             ItemPedido[]
 }
 
@@ -81,7 +80,8 @@ model Produto {
   fornecedores      Fornecedor[]  @relation(fields: [fornecedor_ids], references: [id])
   fornecedor_ids    String[]      @db.ObjectId
   itens_pedido      ItemPedido[]
- }
+}
+
 
 model ItemPedido {
   id                String        @id @default(auto()) @map("_id") @db.ObjectId
@@ -96,4 +96,3 @@ model ItemPedido {
   // a repetição do número do item dentro do mesmo pedido
   @@unique([pedido_id, num_item])
 }
-
